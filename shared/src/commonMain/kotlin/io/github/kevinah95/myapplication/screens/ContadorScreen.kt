@@ -23,32 +23,16 @@ import androidx.compose.ui.unit.dp
 
 // TODO Paso 1: Observa que `count` se reinicia en cada recomposición.
 //             ¿Por qué ocurre esto? Agrega un comentario explicando el problema.
+// ✅ Stateful: dueño del estado. Delega la UI a ContadorView.
 @Composable
 fun ContadorScreen() {
-    var count by remember { mutableStateOf(0) }
+    var count by rememberSaveable { mutableStateOf(0) }
     var nombre by rememberSaveable { mutableStateOf("") }
 
-    Column(
-        modifier = Modifier.fillMaxSize().padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        // Campo de nombre — no se pierde al rotar
-        OutlinedTextField(
-            value = nombre,
-            onValueChange = { nombre = it },
-            label = { Text("Tu nombre") },
-            modifier = Modifier.fillMaxWidth()
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        Text(
-            text = if (nombre.isBlank()) "Contador: $count"
-            else "Hola $nombre, tu contador: $count",
-            style = MaterialTheme.typography.headlineMedium
-        )
-        Spacer(modifier = Modifier.height(16.dp))
-        Button(onClick = { count++ }) {
-            Text("Incrementar")
-        }
-    }
+    ContadorView(
+        count = count,
+        nombre = nombre,
+        onIncrement = { count++ },
+        onNombreChange = { nombre = it }
+    )
 }
