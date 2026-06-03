@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 //             ¿Por qué ocurre esto? Agrega un comentario explicando el problema.
 @Composable
 fun ContadorScreen() {
-    var count = 0 // No funciona: ???
+    var count = 0 // No funciona: se recrea en cada recomposición y vuelve a 0 porque no es estado observable.
 
     Column(
         modifier = Modifier
